@@ -42,9 +42,11 @@ class WordListAdapter(
         if(crimeList[position].solved) {
             holder.img.setImageResource(R.drawable.handcuffs)
         }
+        else{
+            holder.img.setImageDrawable(null)
+        }
 
         holder.crime.setOnClickListener (
-            //Navigation.createNavigateOnClickListener(R.id.to_detailFragment)
             Navigation.createNavigateOnClickListener(R.id.to_detailFragment,bundle)
         )
     }

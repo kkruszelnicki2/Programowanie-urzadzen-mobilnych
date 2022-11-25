@@ -18,7 +18,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="PUM"
             android:textSize="20sp"/>
 
         <ImageView
@@ -33,7 +32,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/indexNumber"
-        android:text="PUM"
         android:textSize="20sp"/>
 
 

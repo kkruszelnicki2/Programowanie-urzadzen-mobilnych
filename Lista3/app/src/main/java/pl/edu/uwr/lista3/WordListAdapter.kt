@@ -10,12 +10,17 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class WordListAdapter(
     private val context: Context,
-    private val Lists: MutableList<Lista>
+    private var Lists: MutableList<Lista>
 
 ) : RecyclerView.Adapter<WordListAdapter.WordListViewHolder>() {
+
+    private val TASK_LIST = "tasks"
+    private val TASK_FILE = "task_file"
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -40,6 +45,7 @@ class WordListAdapter(
         holder.delete.setOnClickListener() {
             Lists.removeAt(position)
             notifyDataSetChanged()
+            saveTaskList(context)
         }
 
         holder.listTitle.setOnClickListener (
@@ -55,8 +61,27 @@ class WordListAdapter(
         val delete: Button = itemView.findViewById(R.id.delete)
     }
 
-    public fun addItem() {
+    fun addItem() {
         Lists.add(Lista("NewList",""))
+    }
+
+    fun editList(position: Int, title: String, description: String) {
+        Lists.set(position,Lista(title,description))
+        saveTaskList(context)
+    }
+
+    fun saveTaskList(context: Context) {
+        val json = Gson().toJson(Lists)
+        val sharedPreferences = context.getSharedPreferences(TASK_FILE, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putString(TASK_LIST, json).apply()
+    }
+
+    fun getTasksList(context: Context) {
+        val sharedPreferences = context.getSharedPreferences(TASK_FILE, Context.MODE_PRIVATE)
+        val json = sharedPreferences.getString(TASK_LIST, "")
+
+        val type = object : TypeToken<ArrayList<Lista>>() {}.type
+        Lists = Gson().fromJson(json, type)
     }
 
 }

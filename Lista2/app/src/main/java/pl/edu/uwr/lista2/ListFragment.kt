@@ -44,10 +44,11 @@ object Crimes {
 }
 
 class ListFragment : Fragment()  {
-    private val wordList by lazy { List(20) { "word $it" } }
     private val crimeList: List<Crime> = Crimes.crimes
 
     private var mContext: Context? = null
+
+    lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,10 +57,9 @@ class ListFragment : Fragment()  {
 
         val view = inflater.inflate(R.layout.list_fragment, container, false)
 
-        view.findViewById<RecyclerView>(R.id.recyclerView).apply {
-            adapter = mContext?.let { WordListAdapter(it, crimeList as List<Crime>) }
-            layoutManager = LinearLayoutManager(mContext)
-        }
+        recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(mContext)
+        recyclerView.adapter = WordListAdapter(requireContext(), crimeList)
 
         return view
     }

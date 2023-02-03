@@ -1,4 +1,4 @@
-package pl.edu.uwr.myapplication
+package pl.edu.uwr.projekt
 
 import org.junit.Test
 
